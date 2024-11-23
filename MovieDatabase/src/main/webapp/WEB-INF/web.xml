@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://java.sun.com/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
+                             http://java.sun.com/xml/ns/javaee/web-app_3_1.xsd"
+         version="3.0">
+
+  <display-name>Movie Database</display-name>
+
+  <!-- SubmitServlet configuration -->
+  <servlet>
+    <servlet-name>SubmitServlet</servlet-name>
+    <servlet-class>SubmitServlet</servlet-class>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>SubmitServlet</servlet-name>
+    <url-pattern>/submit</url-pattern>
+  </servlet-mapping>
+
+  <!-- AddServlet configuration -->
+  <servlet>
+    <servlet-name>AddServlet</servlet-name>
+    <servlet-class>AddServlet</servlet-class>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>AddServlet</servlet-name>
+    <url-pattern>/add</url-pattern>
+  </servlet-mapping>
+
+  <!-- Servlet Definition -->
+  <servlet>
+    <servlet-name>DeleteServlet</servlet-name>
+    <servlet-class>DeleteServlet</servlet-class>
+  </servlet>
+
+  <!-- URL Pattern for the Servlet -->
+  <servlet-mapping>
+    <servlet-name>DeleteServlet</servlet-name>
+    <url-pattern>/delete</url-pattern>
+  </servlet-mapping>
+
+</web-app>
