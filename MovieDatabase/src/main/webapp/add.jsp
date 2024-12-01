@@ -36,19 +36,15 @@
     </style>
 </head>
 <body>
-
     <h1>Add New Data</h1>
 
     <div class="form-container">
         <form action="add" method="post">
-
-
+                <!-- Add hidden table parameter -->
+                <input type="hidden" name="table" value="<%= request.getParameter("table") %>">
             <%
-                // Get the 'type' parameter from the request
-                String type = request.getParameter("type");
-
-                // Show form based on the 'type' selected
-                if ("movie".equals(type)) {
+                String table = request.getParameter("table");
+                if ("MOVIE".equals(table)) {
             %>
                 <h2>Add Movie</h2>
                 <label for="title">Title</label>
@@ -57,26 +53,11 @@
                 <label for="date">Release Date</label>
                 <input type="date" id="date" name="date" required>
 
-                <label for="producer">Producer</label>
-                <input type="text" id="producer" name="producer" required>
-
-                <label for="director">Director</label>
-                <input type="text" id="director" name="director" required>
-
-                <label for="actors">Actors</label>
-                <input type="text" id="actors" name="actors" required>
-
-                <label for="actresses">Actresses</label>
-                <input type="text" id="actresses" name="actresses" required>
-
-                <label for="writers">Writers</label>
-                <input type="text" id="writers" name="writers" required>
-
                 <label for="synopsis">Synopsis</label>
                 <input type="text" id="synopsis" name="synopsis" required>
 
-                <label for="rating">Rating (0-5)</label>
-                <input type="number" id="rating" name="rating" min="0" max="5" required>
+                <label for="rating">Rating (0-10)</label>
+                <input type="number" id="rating" name="rating" min="0" max="10" step="0.1" required>
 
                 <label for="length">Length (in minutes)</label>
                 <input type="number" id="length" name="length" min="0" required>
@@ -84,7 +65,7 @@
                 <label for="category">Category</label>
                 <input type="text" id="category" name="category">
             <%
-                } else if ("producer".equals(type)) {
+                } else if ("MOVIE_PRODUCER".equals(table)) {
             %>
                 <h2>Add Producer</h2>
 
@@ -94,14 +75,8 @@
                 <label for="lastNames">Last Name</label>
                 <input type="text" id="producerLastNames" name="lastNames" required>
 
-                <label for="position">Position</label>
-                <input type="text" id="producerPosition" name="position" required>
-
-                <label for="pay">Pay</label>
-                <input type="number" id="producerPay" name="pay" min="0" required>
-
             <%
-                } else if ("director".equals(type)) {
+                } else if ("MOVIE_DIRECTOR".equals(table)) {
             %>
                 <h2>Add Director</h2>
                 <label for="firstName">First Name</label>
@@ -110,14 +85,8 @@
                 <label for="lastNames">Last Name</label>
                 <input type="text" id="directorLastNames" name="lastNames" required>
 
-                <label for="position">Position</label>
-                <input type="text" id="directorPosition" name="position" required>
-
-                <label for="pay">Pay</label>
-                <input type="number" id="directorPay" name="pay" min="0" required>
-
             <%
-                } else if ("actor".equals(type)) {
+                } else if ("MOVIE_ACTOR".equals(table)) {
             %>
                 <h2>Add Actor</h2>
                 <label for="firstName">First Name</label>
@@ -126,14 +95,8 @@
                 <label for="lastNames">Last Name</label>
                 <input type="text" id="actorLastNames" name="lastNames" required>
 
-                <label for="role">Role</label>
-                <input type="text" id="actorRole" name="role" required>
-
-                <label for="pay">Pay</label>
-                <input type="number" id="actorPay" name="pay" min="0" required>
-
             <%
-                } else if ("actress".equals(type)) {
+                } else if ("MOVIE_ACTRESS".equals(table)) {
             %>
                 <h2>Add Actress</h2>
                 <label for="firstName">First Name</label>
@@ -142,14 +105,8 @@
                 <label for="lastNames">Last Name</label>
                 <input type="text" id="actressLastNames" name="lastNames" required>
 
-                <label for="role">Role</label>
-                <input type="text" id="actressRole" name="role" required>
-
-                <label for="pay">Pay</label>
-                <input type="number" id="actressPay" name="pay" min="0" required>
-
             <%
-                } else if ("writer".equals(type)) {
+                } else if ("MOVIE_WRITER".equals(table)) {
             %>
                 <h2>Add Writer</h2>
                 <label for="firstName">First Name</label>
@@ -158,18 +115,13 @@
                 <label for="lastNames">Last Name</label>
                 <input type="text" id="writerLastNames" name="lastNames" required>
 
-                <label for="contribution">Contribution</label>
-                <input type="text" id="writerContribution" name="contribution" required>
-
-                <label for="pay">Pay</label>
-                <input type="number" id="writerPay" name="pay" min="0" required>
             <%
                 } else {
                     out.println("<h2>Invalid Type</h2>");
                 }
             %>
 
-            <button type="submit" >Add</button>
+            <button type="submit" formaction="addData" name="action" value="addData">Add</button>
         </form>
     </div>
 

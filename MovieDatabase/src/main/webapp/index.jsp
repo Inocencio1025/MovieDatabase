@@ -67,18 +67,24 @@
 
     <!-- Menu -->
     <div class="center-container">
-        <form action="submit" method="post">
-            <select id="type" name="type">
-                <option value="movie">Movie</option>
-                <option value="producer">Producer</option>
-                <option value="director">Director</option>
-                <option value="actor">Actor</option>
-                <option value="actress">Actress</option>
-                <option value="writer">Writer</option>
+        <form method="post">
+            <select id="table" name="table">
+                <option value="MOVIE">Movie</option>
+                <option value="MOVIE_PRODUCER">Producer</option>
+                <option value="MOVIE_DIRECTOR">Director</option>
+                <option value="MOVIE_ACTOR">Actor</option>
+                <option value="MOVIE_ACTRESS">Actress</option>
+                <option value="MOVIE_WRITER">Writer</option>
             </select>
 
-            <button type="submit" name="action" value="view">View</button>
-            <button type="submit" name="action" value="add">Add</button>
+            <!-- "View" button directs to the ViewServlet -->
+            <button type="submit" formaction="view" name="action" value="view">View</button>
+
+            <!-- "Add" button directs to the AddServlet -->
+            <button type="submit" formaction="add" name="action" value="add">Add</button>
+
+            <!-- "Add To Movie" button directs to the AddServlet -->
+            <button type="submit" formaction="addToMovie" name="action" value="addToMovie">Add To Movie</button>
         </form>
     </div>
 
