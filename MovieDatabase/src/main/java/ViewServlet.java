@@ -9,10 +9,10 @@ public class ViewServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String tableName = request.getParameter("table");
-        List<?> data = fetchDataFromDatabase(tableName);
+        String table = request.getParameter("table");
+        List<?> data = fetchDataFromDatabase(table);
 
-        request.setAttribute("tableName", tableName);
+        request.setAttribute("table", table);
         request.setAttribute("data", data);
 
         RequestDispatcher dispatcher = request.getRequestDispatcher("/view.jsp"); // Forward to view.jsp
@@ -22,11 +22,11 @@ public class ViewServlet extends HttpServlet {
     private List<?> fetchDataFromDatabase(String tableName) {
         return switch (tableName) {
             case "MOVIE" -> fetchMovies();
-            case "ACTOR" -> fetchActors();
-            case "ACTRESS" -> fetchActress();
-            case "PRODUCER" -> fetchProducers();
-            case "DIRECTOR" -> fetchDirectors();
-            case "WRITER" -> fetchWriters();
+            case "MOVIE_ACTOR" -> fetchActors();
+            case "MOVIE_ACTRESS" -> fetchActress();
+            case "MOVIE_PRODUCER" -> fetchProducers();
+            case "MOVIE_DIRECTOR" -> fetchDirectors();
+            case "MOVIE_WRITER" -> fetchWriters();
             default -> null; // In case of invalid table name, return null
         };
     }

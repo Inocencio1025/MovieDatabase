@@ -19,7 +19,7 @@ public class DatabaseConnection {
         try (Connection conn = getConnection(); Statement stmt = conn.createStatement()) {
 
             //Drop All tables -for testing
-
+/*
             stmt.execute("DROP TABLE IF EXISTS MOVIE_ACTOR;\n" +
                     "DROP TABLE IF EXISTS MOVIE_ACTRESS;\n" +
                     "DROP TABLE IF EXISTS MOVIE_PRODUCER;\n" +
@@ -31,7 +31,7 @@ public class DatabaseConnection {
                     "DROP TABLE IF EXISTS DIRECTOR;\n" +
                     "DROP TABLE IF EXISTS WRITER;\n" +
                     "DROP TABLE IF EXISTS MOVIE;\n"
-            );
+            ); */
 
             // Create Tables
             // Movie table
@@ -133,7 +133,7 @@ public class DatabaseConnection {
         }
 
         //Adding entries at start up
-        addExampleMovies();
+        //addExampleMovies();
     }
 
     // Add into database functions
@@ -418,46 +418,53 @@ public class DatabaseConnection {
         return movies;
     }
 
-
     public static List<MovieActor> getMovieActors() {
         List<MovieActor> actors = new ArrayList<>();
-        String query = "SELECT a.actorID, a.firstName, a.lastName, ma.role, ma.pay " +
+        String query = "SELECT a.actorID, a.firstName, a.lastName, m.title AS movieTitle, ma.movieID, ma.role, ma.pay " +
                 "FROM ACTOR a " +
-                "JOIN MOVIE_ACTOR ma ON a.actorID = ma.actorID";
+                "JOIN MOVIE_ACTOR ma ON a.actorID = ma.actorID " +
+                "JOIN MOVIE m ON ma.movieID = m.movieID";
 
         try (PreparedStatement statement = getConnection().prepareStatement(query);
              ResultSet resultSet = statement.executeQuery()) {
 
             while (resultSet.next()) {
                 MovieActor actor = new MovieActor(
-                        resultSet.getInt("movieID"),
                         resultSet.getInt("actorID"),
+                        resultSet.getString("firstName"),
+                        resultSet.getString("lastName"),
+                        resultSet.getString("title"),
+                        resultSet.getInt("movieID"),
                         resultSet.getString("role"),
                         resultSet.getBigDecimal("pay")
                 );
                 actors.add(actor);
+                //System.out.println(actor);
             }
-
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
         return actors;
     }
 
+
     public static List<MovieActress> getMovieActresses() {
         List<MovieActress> actresses = new ArrayList<>();
-        String query = "SELECT ac.actressID, ac.firstName, ac.lastName, ma.role, ma.pay " +
-                "FROM ACTRESS ac " +
-                "JOIN MOVIE_ACTRESS ma ON ac.actressID = ma.actressID";
+        String query = "SELECT a.actressID, a.firstName, a.lastName, m.title AS movieTitle, ma.movieID, ma.role, ma.pay " +
+                "FROM ACTRESS a " +
+                "JOIN MOVIE_ACTRESS ma ON a.actressID = ma.actressID " +
+                "JOIN MOVIE m ON ma.movieID = m.movieID";
 
         try (PreparedStatement statement = getConnection().prepareStatement(query);
              ResultSet resultSet = statement.executeQuery()) {
 
             while (resultSet.next()) {
                 MovieActress actress = new MovieActress(
-                        resultSet.getInt("movieID"),
                         resultSet.getInt("actressID"),
+                        resultSet.getString("firstName"),
+                        resultSet.getString("lastName"),
+                        resultSet.getString("title"),
+                        resultSet.getInt("movieID"),
                         resultSet.getString("role"),
                         resultSet.getBigDecimal("pay")
                         );
@@ -473,17 +480,21 @@ public class DatabaseConnection {
 
     public static List<MovieProducer> getMovieProducers() {
         List<MovieProducer> producers = new ArrayList<>();
-        String query = "SELECT p.producerID, p.firstName, p.lastName, mp.role, mp.pay " +
-                "FROM PRODUCER p " +
-                "JOIN MOVIE_PRODUCER mp ON p.producerID = mp.producerID";
+        String query = "SELECT a.producerID, a.firstName, a.lastName, m.title AS movieTitle, ma.movieID, ma.role, ma.pay " +
+        "FROM PRODUCER a " +
+        "JOIN MOVIE_PRODUCER ma ON a.producerID = ma.producerID " +
+        "JOIN MOVIE m ON ma.movieID = m.movieID";
 
         try (PreparedStatement statement = getConnection().prepareStatement(query);
              ResultSet resultSet = statement.executeQuery()) {
 
             while (resultSet.next()) {
                 MovieProducer producer = new MovieProducer(
-                        resultSet.getInt("movieID"),
                         resultSet.getInt("producerID"),
+                        resultSet.getString("firstName"),
+                        resultSet.getString("lastName"),
+                        resultSet.getString("title"),
+                        resultSet.getInt("movieID"),
                         resultSet.getString("role"),
                         resultSet.getBigDecimal("pay")
                 );
@@ -499,17 +510,21 @@ public class DatabaseConnection {
 
     public static List<MovieDirector> getMovieDirectors() {
         List<MovieDirector> directors = new ArrayList<>();
-        String query = "SELECT d.directorID, d.firstName, d.lastName, md.role, md.pay " +
+        String query = "SELECT d.directorID, d.firstName, d.lastName, m.title AS movieTitle, md.movieID, md.role, md.pay " +
                 "FROM DIRECTOR d " +
-                "JOIN MOVIE_DIRECTOR md ON d.directorID = md.directorID";
+                "JOIN MOVIE_DIRECTOR md ON d.directorID = md.directorID " +
+                "JOIN MOVIE m ON md.movieID = m.movieID;";
 
         try (PreparedStatement statement = getConnection().prepareStatement(query);
              ResultSet resultSet = statement.executeQuery()) {
 
             while (resultSet.next()) {
                 MovieDirector director = new MovieDirector(
+                        resultSet.getInt("directorID"),
+                        resultSet.getString("firstName"),
+                        resultSet.getString("lastName"),
+                        resultSet.getString("title"),
                         resultSet.getInt("movieID"),
-                        resultSet.getInt("producerID"),
                         resultSet.getString("role"),
                         resultSet.getBigDecimal("pay")
                 );
@@ -525,17 +540,21 @@ public class DatabaseConnection {
 
     public static List<MovieWriter> getMovieWriters() {
         List<MovieWriter> writers = new ArrayList<>();
-        String query = "SELECT w.writerID, w.firstName, w.lastName, mw.role, mw.pay " +
+        String query = "SELECT w.writerID, w.firstName, w.lastName, m.title AS movieTitle, mw.movieID, mw.role, mw.pay " +
                 "FROM WRITER w " +
-                "JOIN MOVIE_WRITER mw ON w.writerID = mw.writerID";
+                "JOIN MOVIE_WRITER mw ON w.writerID = mw.writerID " +
+                "JOIN MOVIE m ON mw.movieID = m.movieID;";
 
         try (PreparedStatement statement = getConnection().prepareStatement(query);
              ResultSet resultSet = statement.executeQuery()) {
 
             while (resultSet.next()) {
                 MovieWriter writer = new MovieWriter(
-                        resultSet.getInt("movieID"),
                         resultSet.getInt("writerID"),
+                        resultSet.getString("firstName"),
+                        resultSet.getString("lastName"),
+                        resultSet.getString("title"),
+                        resultSet.getInt("movieID"),
                         resultSet.getString("role"),
                         resultSet.getBigDecimal("pay")
                 );

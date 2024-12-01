@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<!DOC TYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -34,111 +35,133 @@
     </style>
 </head>
 <body>
-    <h1>View Data - ${tableName}</h1>
+    <h1>View Data - ${table}</h1>
 
-    <table border="1">
-        <thead>
-            <tr>
-                <c:choose>
-                    <c:when test="${tableName == 'MOVIE'}">
-                        <th>Movie ID</th>
-                        <th>Title</th>
-                        <th>Release Date</th>
-                        <th>Synopsis</th>
-                        <th>Rating</th>
-                        <th>Length</th>
-                        <th>Category</th>
-                    </c:when>
-                    <c:when test="${tableName == 'ACTOR'}">
-                        <th>Actor ID</th>
-                        <th>First Name</th>
-                        <th>Last Name</th>
-                        <th>Role</th>
-                        <th>Pay</th>
-                    </c:when>
-                    <c:when test="${tableName == 'ACTRESS'}">
-                        <th>Actress ID</th>
-                        <th>First Name</th>
-                        <th>Last Name</th>
-                        <th>Role</th>
-                        <th>Pay</th>
-                    </c:when>
-                    <c:when test="${tableName == 'PRODUCER'}">
-                        <th>Producer ID</th>
-                        <th>First Name</th>
-                        <th>Last Name</th>
-                        <th>Role</th>
-                        <th>Pay</th>
-                    </c:when>
-                    <c:when test="${tableName == 'DIRECTOR'}">
-                        <th>Director ID</th>
-                        <th>First Name</th>
-                        <th>Last Name</th>
-                        <th>Role</th>
-                        <th>Pay</th>
-                    </c:when>
-                    <c:when test="${tableName == 'WRITER'}">
-                        <th>Writer ID</th>
-                        <th>First Name</th>
-                        <th>Last Name</th>
-                        <th>Role</th>
-                        <th>Pay</th>
-                    </c:when>
-                </c:choose>
-            </tr>
-        </thead>
-        <tbody>
-            <c:forEach var="item" items="${data}">
+    <div class="table-container">
+        <table>
+            <thead>
                 <tr>
                     <c:choose>
-                        <c:when test="${tableName == 'MOVIE'}">
-                            <td>${item.movieID}</td>
-                            <td>${item.title}</td>
-                            <td>${item.releaseDate}</td>
-                            <td>${item.synopsis}</td>
-                            <td>${item.rating}</td>
-                            <td>${item.length}</td>
-                            <td>${item.category}</td>
+                        <c:when test="${table == 'MOVIE'}">
+                            <th>Movie ID</th>
+                            <th>Title</th>
+                            <th>Release Date</th>
+                            <th>Synopsis</th>
+                            <th>Rating</th>
+                            <th>Length</th>
+                            <th>Category</th>
                         </c:when>
-                        <c:when test="${tableName == 'ACTOR'}">
-                            <td>${item.actorID}</td>
-                            <td>${item.firstName}</td>
-                            <td>${item.lastName}</td>
-                            <td>${item.role}</td>
-                            <td>${item.pay}</td>
+                        <c:when test="${table == 'MOVIE_ACTOR'}">
+                            <th>Actor ID</th>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th>Movie</th>
+                            <th>Movie ID</th>
+                            <th>Role</th>
+                            <th>Pay</th>
                         </c:when>
-                        <c:when test="${tableName == 'ACTRESS'}">
-                            <td>${item.actressID}</td>
-                            <td>${item.firstName}</td>
-                            <td>${item.lastName}</td>
-                            <td>${item.role}</td>
-                            <td>${item.pay}</td>
+                        <c:when test="${table == 'MOVIE_ACTRESS'}">
+                            <th>Actress ID</th>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th>Movie</th>
+                            <th>Movie ID</th>
+                            <th>Role</th>
+                            <th>Pay</th>
                         </c:when>
-                        <c:when test="${tableName == 'PRODUCER'}">
-                            <td>${item.producerID}</td>
-                            <td>${item.firstName}</td>
-                            <td>${item.lastName}</td>
-                            <td>${item.role}</td>
-                            <td>${item.pay}</td>
+                        <c:when test="${table == 'MOVIE_PRODUCER'}">
+                            <th>Producer ID</th>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th>Movie</th>
+                            <th>Movie ID</th>
+                            <th>Role</th>
+                            <th>Pay</th>
                         </c:when>
-                        <c:when test="${tableName == 'DIRECTOR'}">
-                            <td>${item.directorID}</td>
-                            <td>${item.firstName}</td>
-                            <td>${item.lastName}</td>
-                            <td>${item.role}</td>
-                            <td>${item.pay}</td>
+                        <c:when test="${table == 'MOVIE_DIRECTOR'}">
+                            <th>Director ID</th>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th>Movie</th>
+                            <th>Movie ID</th>
+                            <th>Role</th>
+                            <th>Pay</th>
                         </c:when>
-                        <c:when test="${tableName == 'WRITER'}">
-                            <td>${item.writerID}</td>
-                            <td>${item.firstName}</td>
-                            <td>${item.lastName}</td>
-                            <td>${item.role}</td>
-                            <td>${item.pay}</td>
+                        <c:when test="${table == 'MOVIE_WRITER'}">
+                            <th>Writer ID</th>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th>Movie</th>
+                            <th>Movie ID</th>
+                            <th>Role</th>
+                            <th>Pay</th>
                         </c:when>
                     </c:choose>
                 </tr>
-            </c:forEach>
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                <c:forEach var="item" items="${data}">
+                    <tr>
+                        <c:choose>
+                            <c:when test="${table == 'MOVIE'}">
+                                <td>${item.movieID}</td>
+                                <td>${item.title}</td>
+                                <td>${item.releaseDate}</td>
+                                <td>${item.synopsis}</td>
+                                <td>${item.rating}</td>
+                                <td>${item.length}</td>
+                                <td>${item.category}</td>
+                            </c:when>
+                            <c:when test="${table == 'MOVIE_ACTOR'}">
+                                <td>${item.actorID}</td>
+                                <td>${item.firstName}</td>
+                                <td>${item.lastName}</td>
+                                <td>${item.title}</td>
+                                <td>${item.movieID}</td>
+                                <td>${item.role}</td>
+                                <td>${item.pay}</td>
+                            </c:when>
+                            <c:when test="${table == 'MOVIE_ACTRESS'}">
+                                <td>${item.actressID}</td>
+                                <td>${item.firstName}</td>
+                                <td>${item.lastName}</td>
+                                <td>${item.title}</td>
+                                <td>${item.movieID}</td>
+                                <td>${item.role}</td>
+                                <td>${item.pay}</td>
+                            </c:when>
+                            <c:when test="${table == 'MOVIE_PRODUCER'}">
+                                <td>${item.producerID}</td>
+                                <td>${item.firstName}</td>
+                                <td>${item.lastName}</td>
+                                <td>${item.title}</td>
+                                <td>${item.movieID}</td>
+                                <td>${item.role}</td>
+                                <td>${item.pay}</td>
+                            </c:when>
+                            <c:when test="${table == 'MOVIE_DIRECTOR'}">
+                                <td>${item.directorID}</td>
+                                <td>${item.firstName}</td>
+                                <td>${item.lastName}</td>
+                                <td>${item.title}</td>
+                                <td>${item.movieID}</td>
+                                <td>${item.role}</td>
+                                <td>${item.pay}</td>
+                            </c:when>
+                            <c:when test="${table == 'MOVIE_WRITER'}">
+                                <td>${item.writerID}</td>
+                                <td>${item.firstName}</td>
+                                <td>${item.lastName}</td>
+                                <td>${item.title}</td>
+                                <td>${item.movieID}</td>
+                                <td>${item.role}</td>
+                                <td>${item.pay}</td>
+                            </c:when>
+                        </c:choose>
+                    </tr>
+                </c:forEach>
+            </tbody>
+        </table>
+    </div>
 </body>
 </html>
