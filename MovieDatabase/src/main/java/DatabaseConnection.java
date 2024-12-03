@@ -19,7 +19,6 @@ public class DatabaseConnection {
         try (Connection conn = getConnection(); Statement stmt = conn.createStatement()) {
 
             //Drop All tables -for testing
-
             stmt.execute("DROP TABLE IF EXISTS MOVIE_ACTOR;\n" +
                     "DROP TABLE IF EXISTS MOVIE_ACTRESS;\n" +
                     "DROP TABLE IF EXISTS MOVIE_PRODUCER;\n" +
@@ -136,8 +135,7 @@ public class DatabaseConnection {
         addExampleMovies();
     }
 
-    // Add into database functions
-    // All functions returns its ID
+    // All functions returns its created ID
     public static int addMovie(String title, Date releaseDate, String synopsis, BigDecimal rating, int length, String category) {
         String sql = "INSERT INTO MOVIE (title, releaseDate, synopsis, rating, length, category) VALUES (?, ?, ?, ?, ?, ?)";
         int movieID = -1;  // Default value if insertion fails
@@ -158,7 +156,6 @@ public class DatabaseConnection {
                     System.out.println("Movie " + title + " added successfully with ID: " + movieID);
                 }
             }
-
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -181,7 +178,6 @@ public class DatabaseConnection {
                     System.out.println("Producer " + firstName + " added successfully with ID: " + producerID);  // Print to console
                 }
             }
-
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -204,12 +200,12 @@ public class DatabaseConnection {
                     System.out.println("Actor " + firstName + " added successfully with ID: " + actorID);
                 }
             }
-
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return actorID;
     }
+
     public static int addActress(String firstName, String lastName) {
         String sql = "INSERT INTO ACTRESS (firstName, lastName) VALUES (?, ?)";
         int actressID = -1;  // Default value if the insertion fails
@@ -226,7 +222,6 @@ public class DatabaseConnection {
                     System.out.println("Actress " + firstName + " added successfully with ID: " + actressID);
                 }
             }
-
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -249,12 +244,12 @@ public class DatabaseConnection {
                     System.out.println("Writer " + firstName + " added successfully with ID: " + writerID);
                 }
             }
-
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return writerID;
     }
+
     public static int addDirector(String firstName, String lastName) {
         String sql = "INSERT INTO DIRECTOR (firstName, lastName) VALUES (?, ?)";
         int directorID = -1;  // Default value if the insertion fails
@@ -271,7 +266,6 @@ public class DatabaseConnection {
                     System.out.println("Director " + firstName + " added successfully with ID: " + directorID);
                 }
             }
-
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -292,7 +286,6 @@ public class DatabaseConnection {
             if (rowsAffected > 0) {
                 System.out.println("Producer " + producerID + " linked to Movie " + movieID + " with role: " + role + " and pay: $" + pay);
             }
-
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -307,12 +300,10 @@ public class DatabaseConnection {
             stmt.setString(3, role);
             stmt.setBigDecimal(4, pay);
 
-
             int rowsAffected = stmt.executeUpdate();
             if (rowsAffected > 0) {
                 System.out.println("Actor " + actorID + " linked to Movie " + movieID + " with role: " + role + " and pay: $" + pay);
             }
-
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -331,7 +322,6 @@ public class DatabaseConnection {
             if (rowsAffected > 0) {
                 System.out.println("Actress " + actressID + " linked to Movie " + movieID + " with role: " + role + " and pay: $" + pay);
             }
-
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -350,7 +340,6 @@ public class DatabaseConnection {
             if (rowsAffected > 0) {
                 System.out.println("Director " + directorID + " linked to Movie " + movieID + " with role: " + role + " and pay: $" + pay);
             }
-
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -370,22 +359,19 @@ public class DatabaseConnection {
             if (rowsAffected > 0) {
                 System.out.println("Writer " + writerID + " linked to Movie " + movieID + " with role: " + role + " and pay: $" + pay);
             }
-
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
-
     // End of all Add functions
 
 
-
-
-
-    // Method to get all movies from the database
+    // All get functions
     public static List<Movie> getMovies() {
         List<Movie> movies = new ArrayList<>();
-        String query = "SELECT M.movieID, M.title, M.releaseDate, M.synopsis, M.rating, M.length, M.category, " +
+        String query =
+                "SELECT M.movieID, M.title, M.releaseDate, M.synopsis, M.rating, M.length, M.category, " +
+
                 "GROUP_CONCAT(DISTINCT CONCAT(A.firstName, ' ', A.lastName) SEPARATOR '<br>') AS actors, " +
                 "GROUP_CONCAT(DISTINCT MA.role SEPARATOR '<br>') AS actorRoles, " +
                 "GROUP_CONCAT(DISTINCT MA.pay SEPARATOR '<br>') AS actorPay, " +
@@ -422,8 +408,6 @@ public class DatabaseConnection {
                 "LEFT JOIN MOVIE_WRITER MW ON M.movieID = MW.movieID " +
                 "LEFT JOIN WRITER W ON MW.writerID = W.writerID " +
                 "GROUP BY M.movieID;";
-
-
 
 
         try (PreparedStatement statement = getConnection().prepareStatement(query);
@@ -498,7 +482,6 @@ public class DatabaseConnection {
 
                 movies.add(movie);
             }
-
 
         } catch (SQLException e) {
             e.printStackTrace(); // Log the exception
