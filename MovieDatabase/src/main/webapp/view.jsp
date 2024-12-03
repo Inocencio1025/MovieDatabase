@@ -9,24 +9,47 @@
     <title>View Data - Movie Database</title>
     <style>
         .table-container {
-            width: 80%;
             margin: auto;
             margin-top: 20px;
             border-collapse: collapse;
         }
         table {
             width: 100%;
+            table-layout: fixed;
             border: 1px solid #ccc;
             border-radius: 5px;
             text-align: left;
         }
         th, td {
+            width: 150px;
             padding: 10px;
             border: 1px solid #ccc;
         }
         th {
             background-color: #f2f2f2;
         }
+
+        th:nth-child(1), td:nth-child(1) {
+                width: 50px;
+            }
+
+            <% String table = request.getParameter("table"); %>
+            <% if ("MOVIE".equals(table)) { %>
+                th:nth-child(5), td:nth-child(5) {
+                    width: 50px;
+                }
+                th:nth-child(6), td:nth-child(6) {
+                    width: 50px;
+                }
+                th:nth-child(7), td:nth-child(7) {
+                    width: 100px;
+                }
+
+            <% } else { %>
+                th:nth-child(5), td:nth-child(5) {
+                    width: 50px;
+                }
+            <% } %>
         select {
             font-size: 16px;
             margin: 10px 0;
@@ -43,60 +66,88 @@
                 <tr>
                     <c:choose>
                         <c:when test="${table == 'MOVIE'}">
-                            <th>Movie ID</th>
-                            <th>Title</th>
-                            <th>Release Date</th>
+                            <th><a href="view?table=${table}&sortBy=movieID">Movie ID</a></th>
+                            <th><a href="view?table=${table}&sortBy=title">Title</a></th>
+                            <th><a href="view?table=${table}&sortBy=releaseDate">Release Date</a></th>
                             <th>Synopsis</th>
-                            <th>Rating</th>
-                            <th>Length</th>
-                            <th>Category</th>
+                            <th><a href="view?table=${table}&sortBy=rating">Rating</a></th>
+                            <th><a href="view?table=${table}&sortBy=length">Length</a></th>
+                            <th><a href="view?table=${table}&sortBy=category">Category</a></th>
+
+                            <!-- Headers for the lists of names, roles, and pay -->
+                            <th>Actors</th>
+                            <th>Actor Roles</th>
+                            <th>Actor Pay</th>
+
+                            <th>Actresses</th>
+                            <th>Actress Roles</th>
+                            <th>Actress Pay</th>
+
+                            <th>Directors</th>
+                            <th>Director Roles</th>
+                            <th>Director Pay</th>
+
+                            <th>Producers</th>
+                            <th>Producer Roles</th>
+                            <th>Producer Pay</th>
+
+                            <th>Writers</th>
+                            <th>Writer Roles</th>
+                            <th>Writer Pay</th>
                         </c:when>
+
+
                         <c:when test="${table == 'MOVIE_ACTOR'}">
-                            <th>Actor ID</th>
+                            <th><a href="view?table=${table}&sortBy=ID">Actor ID</a></th>
                             <th>First Name</th>
-                            <th>Last Name</th>
-                            <th>Movie</th>
+                            <th><a href="view?table=${table}&sortBy=lastName">Last Name</a></th>
+                            <th><a href="view?table=${table}&sortBy=movie">Movie</a></th>
                             <th>Movie ID</th>
-                            <th>Role</th>
-                            <th>Pay</th>
+                            <th><a href="view?table=${table}&sortBy=role">Role</a></th>
+                            <th><a href="view?table=${table}&sortBy=pay">Pay</a></th>
                         </c:when>
+
                         <c:when test="${table == 'MOVIE_ACTRESS'}">
-                            <th>Actress ID</th>
+                            <th><a href="view?table=${table}&sortBy=ID">Actress ID</a></th>
                             <th>First Name</th>
-                            <th>Last Name</th>
-                            <th>Movie</th>
+                            <th><a href="view?table=${table}&sortBy=lastName">Last Name</a></th>
+                            <th><a href="view?table=${table}&sortBy=movie">Movie</a></th>
                             <th>Movie ID</th>
-                            <th>Role</th>
-                            <th>Pay</th>
+                            <th><a href="view?table=${table}&sortBy=role">Role</a></th>
+                            <th><a href="view?table=${table}&sortBy=pay">Pay</a></th>
                         </c:when>
+
                         <c:when test="${table == 'MOVIE_PRODUCER'}">
-                            <th>Producer ID</th>
+                            <th><a href="view?table=${table}&sortBy=ID">Producer ID</a></th>
                             <th>First Name</th>
-                            <th>Last Name</th>
-                            <th>Movie</th>
+                            <th><a href="view?table=${table}&sortBy=lastName">Last Name</a></th>
+                            <th><a href="view?table=${table}&sortBy=movie">Movie</a></th>
                             <th>Movie ID</th>
-                            <th>Role</th>
-                            <th>Pay</th>
+                            <th><a href="view?table=${table}&sortBy=role">Role</a></th>
+                            <th><a href="view?table=${table}&sortBy=pay">Pay</a></th>
                         </c:when>
+
                         <c:when test="${table == 'MOVIE_DIRECTOR'}">
-                            <th>Director ID</th>
+                            <th><a href="view?table=${table}&sortBy=ID">Director ID</a></th>
                             <th>First Name</th>
-                            <th>Last Name</th>
-                            <th>Movie</th>
+                            <th><a href="view?table=${table}&sortBy=lastName">Last Name</a></th>
+                            <th><a href="view?table=${table}&sortBy=movie">Movie</a></th>
                             <th>Movie ID</th>
-                            <th>Role</th>
-                            <th>Pay</th>
+                            <th><a href="view?table=${table}&sortBy=role">Role</a></th>
+                            <th><a href="view?table=${table}&sortBy=pay">Pay</a></th>
                         </c:when>
+
                         <c:when test="${table == 'MOVIE_WRITER'}">
-                            <th>Writer ID</th>
+                            <th><a href="view?table=${table}&sortBy=ID">Writer ID</a></th>
                             <th>First Name</th>
-                            <th>Last Name</th>
-                            <th>Movie</th>
+                            <th><a href="view?table=${table}&sortBy=lastName">Last Name</a></th>
+                            <th><a href="view?table=${table}&sortBy=movie">Movie</a></th>
                             <th>Movie ID</th>
-                            <th>Role</th>
-                            <th>Pay</th>
+                            <th><a href="view?table=${table}&sortBy=role">Role</a></th>
+                            <th><a href="view?table=${table}&sortBy=pay">Pay</a></th>
                         </c:when>
                     </c:choose>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
@@ -111,7 +162,33 @@
                                 <td>${item.rating}</td>
                                 <td>${item.length}</td>
                                 <td>${item.category}</td>
+
+                                <!-- Actors, Roles, and Pay -->
+                                <td>${item.actors}</td>
+                                <td>${item.actorRoles}</td>
+                                <td>${item.actorPay}</td>
+
+                                <!-- Actresses, Roles, and Pay -->
+                                <td>${item.actresses}</td>
+                                <td>${item.actressRoles}</td>
+                                <td>${item.actressPay}</td>
+
+                                <!-- Directors, Roles, and Pay -->
+                                <td>${item.directors}</td>
+                                <td>${item.directorRoles}</td>
+                                <td>${item.directorPay}</td>
+
+                                <!-- Producers, Roles, and Pay -->
+                                <td>${item.producers}</td>
+                                <td>${item.producerRoles}</td>
+                                <td>${item.producerPay}</td>
+
+                                <!-- Writers, Roles, and Pay -->
+                                <td>${item.writers}</td>
+                                <td>${item.writerRoles}</td>
+                                <td>${item.writerPay}</td>
                             </c:when>
+
                             <c:when test="${table == 'MOVIE_ACTOR'}">
                                 <td>${item.actorID}</td>
                                 <td>${item.firstName}</td>
@@ -158,6 +235,12 @@
                                 <td>${item.pay}</td>
                             </c:when>
                         </c:choose>
+                        <td>
+                            <form action="delete" method="post" style="display:inline;">
+                                <input type="hidden" name="ID" value="${movie.movieID}">
+                                <button type="submit" formaction="delete" name="action" value="delete">Delete</button>
+                            </form>
+                        </td>
                     </tr>
                 </c:forEach>
             </tbody>

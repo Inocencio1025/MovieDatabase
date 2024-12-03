@@ -19,7 +19,7 @@ public class DatabaseConnection {
         try (Connection conn = getConnection(); Statement stmt = conn.createStatement()) {
 
             //Drop All tables -for testing
-/*
+
             stmt.execute("DROP TABLE IF EXISTS MOVIE_ACTOR;\n" +
                     "DROP TABLE IF EXISTS MOVIE_ACTRESS;\n" +
                     "DROP TABLE IF EXISTS MOVIE_PRODUCER;\n" +
@@ -31,7 +31,7 @@ public class DatabaseConnection {
                     "DROP TABLE IF EXISTS DIRECTOR;\n" +
                     "DROP TABLE IF EXISTS WRITER;\n" +
                     "DROP TABLE IF EXISTS MOVIE;\n"
-            ); */
+            );
 
             // Create Tables
             // Movie table
@@ -48,7 +48,7 @@ public class DatabaseConnection {
             stmt.execute("CREATE TABLE IF NOT EXISTS PRODUCER (" +
                     "producerID INT PRIMARY KEY AUTO_INCREMENT, " +
                     "firstName VARCHAR(255), " +
-                    "lastName VARCHAR(255))"  // Removed the extra comma
+                    "lastName VARCHAR(255))"
             );
             // Actor table
             stmt.execute("CREATE TABLE IF NOT EXISTS ACTOR (" +
@@ -80,9 +80,9 @@ public class DatabaseConnection {
                     "movieID INT, " +
                     "role VARCHAR(100), " +
                     "pay INT, " +
-                    "PRIMARY KEY (producerID, movieID), " +  // Fixed the case here: movieID -> movieID
-                    "FOREIGN KEY(producerID) REFERENCES PRODUCER(producerID), " +  // Fixed case here
-                    "FOREIGN KEY(movieID) REFERENCES MOVIE(movieID))"  // Fixed case here
+                    "PRIMARY KEY (producerID, movieID), " +
+                    "FOREIGN KEY(producerID) REFERENCES PRODUCER(producerID), " +
+                    "FOREIGN KEY(movieID) REFERENCES MOVIE(movieID))"
             );
             // Movie_Actor table (Weak Entity)
             stmt.execute("CREATE TABLE IF NOT EXISTS MOVIE_ACTOR (" +
@@ -91,8 +91,8 @@ public class DatabaseConnection {
                     "role VARCHAR(100), " +
                     "pay INT, " +
                     "PRIMARY KEY (actorID, movieID), " +
-                    "FOREIGN KEY (actorID) REFERENCES ACTOR(actorID), " +  // Fixed case here
-                    "FOREIGN KEY (movieID) REFERENCES MOVIE(movieID))"  // Fixed case here
+                    "FOREIGN KEY (actorID) REFERENCES ACTOR(actorID), " +
+                    "FOREIGN KEY (movieID) REFERENCES MOVIE(movieID))"
             );
             // Movie_Actress table (Weak Entity)
             stmt.execute("CREATE TABLE IF NOT EXISTS MOVIE_ACTRESS (" +
@@ -101,8 +101,8 @@ public class DatabaseConnection {
                     "role VARCHAR(100), " +
                     "pay INT, " +
                     "PRIMARY KEY (actressID, movieID), " +
-                    "FOREIGN KEY (actressID) REFERENCES ACTRESS(actressID), " +  // Fixed case here
-                    "FOREIGN KEY (movieID) REFERENCES MOVIE(movieID))"  // Fixed case here
+                    "FOREIGN KEY (actressID) REFERENCES ACTRESS(actressID), " +
+                    "FOREIGN KEY (movieID) REFERENCES MOVIE(movieID))"
             );
             // Movie_Writer table (Weak Entity)
             stmt.execute("CREATE TABLE IF NOT EXISTS MOVIE_WRITER (" +
@@ -111,8 +111,8 @@ public class DatabaseConnection {
                     "role VARCHAR(100), " +
                     "pay INT, " +
                     "PRIMARY KEY (writerID, movieID), " +
-                    "FOREIGN KEY (writerID) REFERENCES WRITER(writerID), " +  // Fixed case here
-                    "FOREIGN KEY (movieID) REFERENCES MOVIE(movieID))"  // Fixed case here
+                    "FOREIGN KEY (writerID) REFERENCES WRITER(writerID), " +
+                    "FOREIGN KEY (movieID) REFERENCES MOVIE(movieID))"
             );
             // Movie_Director table (Weak Entity)
             stmt.execute("CREATE TABLE IF NOT EXISTS MOVIE_DIRECTOR (" +
@@ -121,8 +121,8 @@ public class DatabaseConnection {
                     "role VARCHAR(100), " +
                     "pay INT, " +
                     "PRIMARY KEY (directorID, movieID), " +
-                    "FOREIGN KEY (directorID) REFERENCES DIRECTOR(directorID), " +  // Fixed case here
-                    "FOREIGN KEY (movieID) REFERENCES MOVIE(movieID))"  // Fixed case here
+                    "FOREIGN KEY (directorID) REFERENCES DIRECTOR(directorID), " +
+                    "FOREIGN KEY (movieID) REFERENCES MOVIE(movieID))"
             );
 
             System.out.println("Database and tables initialized successfully.");
@@ -133,7 +133,7 @@ public class DatabaseConnection {
         }
 
         //Adding entries at start up
-        //addExampleMovies();
+        addExampleMovies();
     }
 
     // Add into database functions
@@ -380,36 +380,125 @@ public class DatabaseConnection {
 
 
 
-    public static void deleteRecord(String table, int id) {
-        String sql = "DELETE FROM " + table + " WHERE id = ?";
-        try (Connection conn = getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setInt(1, id);
-            stmt.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
+
 
     // Method to get all movies from the database
     public static List<Movie> getMovies() {
         List<Movie> movies = new ArrayList<>();
-        String query = "SELECT movieID, title, releaseDate, synopsis, rating, length, category FROM MOVIE";
+        String query = "SELECT M.movieID, M.title, M.releaseDate, M.synopsis, M.rating, M.length, M.category, " +
+                "GROUP_CONCAT(DISTINCT CONCAT(A.firstName, ' ', A.lastName) SEPARATOR '<br>') AS actors, " +
+                "GROUP_CONCAT(DISTINCT MA.role SEPARATOR '<br>') AS actorRoles, " +
+                "GROUP_CONCAT(DISTINCT MA.pay SEPARATOR '<br>') AS actorPay, " +
+
+                "GROUP_CONCAT(DISTINCT CONCAT(AC.firstName, ' ', AC.lastName) SEPARATOR '<br>') AS actresses, " +
+                "GROUP_CONCAT(DISTINCT MAC.role SEPARATOR '<br>') AS actressRoles, " +
+                "GROUP_CONCAT(DISTINCT MAC.pay SEPARATOR '<br>') AS actressPay, " +
+
+                "GROUP_CONCAT(DISTINCT CONCAT(D.firstName, ' ', D.lastName) SEPARATOR '<br>') AS directors, " +
+                "GROUP_CONCAT(DISTINCT MD.role SEPARATOR '<br>') AS directorRoles, " +
+                "GROUP_CONCAT(DISTINCT MD.pay SEPARATOR '<br>') AS directorPay, " +
+
+                "GROUP_CONCAT(DISTINCT CONCAT(P.firstName, ' ', P.lastName) SEPARATOR '<br>') AS producers, " +
+                "GROUP_CONCAT(DISTINCT MP.role SEPARATOR '<br>') AS producerRoles, " +
+                "GROUP_CONCAT(DISTINCT MP.pay SEPARATOR '<br>') AS producerPay, " +
+
+                "GROUP_CONCAT(DISTINCT CONCAT(W.firstName, ' ', W.lastName) SEPARATOR '<br>') AS writers, " +
+                "GROUP_CONCAT(DISTINCT MW.role SEPARATOR '<br>') AS writerRoles, " +
+                "GROUP_CONCAT(DISTINCT MW.pay SEPARATOR '<br>') AS writerPay " +
+                "FROM MOVIE M " +
+
+                "LEFT JOIN MOVIE_ACTOR MA ON M.movieID = MA.movieID " +
+                "LEFT JOIN ACTOR A ON MA.actorID = A.actorID " +
+
+                "LEFT JOIN MOVIE_ACTRESS MAC ON M.movieID = MAC.movieID " +
+                "LEFT JOIN ACTRESS AC ON MAC.actressID = AC.actressID " +
+
+                "LEFT JOIN MOVIE_DIRECTOR MD ON M.movieID = MD.movieID " +
+                "LEFT JOIN DIRECTOR D ON MD.directorID = D.directorID " +
+
+                "LEFT JOIN MOVIE_PRODUCER MP ON M.movieID = MP.movieID " +
+                "LEFT JOIN PRODUCER P ON MP.producerID = P.producerID " +
+
+                "LEFT JOIN MOVIE_WRITER MW ON M.movieID = MW.movieID " +
+                "LEFT JOIN WRITER W ON MW.writerID = W.writerID " +
+                "GROUP BY M.movieID;";
+
+
+
 
         try (PreparedStatement statement = getConnection().prepareStatement(query);
              ResultSet resultSet = statement.executeQuery()) {
 
             while (resultSet.next()) {
+                // Create lists for the actors, actresses, directors, producers, and writers
+                List<String> actors = new ArrayList<>();
+                List<String> actresses = new ArrayList<>();
+                List<String> directors = new ArrayList<>();
+                List<String> producers = new ArrayList<>();
+                List<String> writers = new ArrayList<>();
+
+                List<String> actorRoles = new ArrayList<>();
+                List<String> actressRoles = new ArrayList<>();
+                List<String> directorRoles = new ArrayList<>();
+                List<String> producerRoles = new ArrayList<>();
+                List<String> writerRoles = new ArrayList<>();
+
+                List<String> actorPay = new ArrayList<>();
+                List<String> actressPay = new ArrayList<>();
+                List<String> directorPay = new ArrayList<>();
+                List<String> producerPay = new ArrayList<>();
+                List<String> writerPay = new ArrayList<>();
+
+                // Assuming resultSet contains the relevant data for each column
+                // Add actors, actresses, directors, etc. to the lists
+                actors.add(resultSet.getString("actors"));
+                actorRoles.add(resultSet.getString("actorRoles"));
+                actorPay.add(resultSet.getString("actorPay"));
+
+                actresses.add(resultSet.getString("actresses"));
+                actressRoles.add(resultSet.getString("actressRoles"));
+                actressPay.add(resultSet.getString("actressPay"));
+                directors.add(resultSet.getString("directors"));
+                directorRoles.add(resultSet.getString("directorRoles"));
+                directorPay.add(resultSet.getString("directorPay"));
+
+                producers.add(resultSet.getString("producers"));
+                producerRoles.add(resultSet.getString("producerRoles"));
+                producerPay.add(resultSet.getString("producerPay"));
+
+                writers.add(resultSet.getString("writers"));
+                writerRoles.add(resultSet.getString("writerRoles"));
+                writerPay.add(resultSet.getString("writerPay"));
+
+                // Create the movie object with all the lists included
                 Movie movie = new Movie(
-                resultSet.getInt("movieID"),
-                resultSet.getString("title"),
-                resultSet.getDate("releaseDate"),
-                resultSet.getString("synopsis"),
-                resultSet.getBigDecimal("rating"),
-                resultSet.getInt("length"),
-                resultSet.getString("category"));
+                        resultSet.getInt("movieID"),
+                        resultSet.getString("title"),
+                        resultSet.getString("releaseDate"),
+                        resultSet.getString("synopsis"),
+                        resultSet.getString("rating"),
+                        resultSet.getInt("length"),
+                        resultSet.getString("category"),
+                        actors,
+                        actresses,
+                        directors,
+                        producers,
+                        writers,
+                        actorRoles,
+                        actressRoles,
+                        directorRoles,
+                        producerRoles,
+                        writerRoles,
+                        actorPay,
+                        actressPay,
+                        directorPay,
+                        producerPay,
+                        writerPay
+                );
+
                 movies.add(movie);
             }
+
 
         } catch (SQLException e) {
             e.printStackTrace(); // Log the exception
@@ -566,6 +655,63 @@ public class DatabaseConnection {
         }
 
         return writers;
+    }
+
+    public static void deleteRecord(String table, String id) {
+        try (Connection conn = getConnection()) {
+            conn.setAutoCommit(false); // Start transaction
+
+            // Delete weak entities first
+            switch (table) {
+                case "MOVIE":
+                    deleteWeakEntity(conn, "MOVIE_ACTOR", "movieID", id);
+                    deleteWeakEntity(conn, "MOVIE_ACTRESS", "movieID", id);
+                    deleteWeakEntity(conn, "MOVIE_DIRECTOR", "movieID", id);
+                    deleteWeakEntity(conn, "MOVIE_PRODUCER", "movieID", id);
+                    deleteWeakEntity(conn, "MOVIE_WRITER", "movieID", id);
+                    break;
+
+                case "ACTOR":
+                    deleteWeakEntity(conn, "MOVIE_ACTOR", "actorID", id);
+                    break;
+
+                case "ACTRESS":
+                    deleteWeakEntity(conn, "MOVIE_ACTRESS", "actressID", id);
+                    break;
+
+                case "DIRECTOR":
+                    deleteWeakEntity(conn, "MOVIE_DIRECTOR", "directorID", id);
+                    break;
+
+                case "PRODUCER":
+                    deleteWeakEntity(conn, "MOVIE_PRODUCER", "producerID", id);
+                    break;
+
+                case "WRITER":
+                    deleteWeakEntity(conn, "MOVIE_WRITER", "writerID", id);
+                    break;
+            }
+
+            // Delete main record
+            String sql = "DELETE FROM " + table + " WHERE id = ?";
+            try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+                stmt.setInt(1, Integer.parseInt(id));
+                stmt.executeUpdate();
+            }
+
+            conn.commit(); // Commit transaction
+            System.out.println(id + " deleted from " + table);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static void deleteWeakEntity(Connection conn, String weakTable, String foreignKey, String id) throws SQLException {
+        String sql = "DELETE FROM " + weakTable + " WHERE " + foreignKey + " = ?";
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, Integer.parseInt(id));
+            stmt.executeUpdate();
+        }
     }
 
     // For adding example entries to database
