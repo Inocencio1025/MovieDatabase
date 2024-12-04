@@ -22,6 +22,11 @@
             padding: 5px;
             width: 100%;
         }
+        form a.button, form button {
+            margin-right: 10px; /* Add space between buttons */
+            display: inline-block; /* Ensure alignment */
+            text-align: center; /* Center text */
+            }
         button {
             background-color: #007BFF;
             color: white;
@@ -66,6 +71,8 @@
 
             <!-- Submit button -->
             <button type="submit" formaction="addMovieData" name="action" value="addMovieData">Add to Movie</button>
+            <a href="index.jsp" class="button">Back</a>
+
         </form>
     </div>
 

@@ -55,6 +55,11 @@
             margin: 10px 0;
             padding: 5px;
         }
+        form a.button, form button {
+            margin: 30px; /* Add space between buttons */
+            display: inline-block; /* Ensure alignment */
+            text-align: center; /* Center text */
+        }
     </style>
 </head>
 <body>
@@ -245,6 +250,8 @@
                 </c:forEach>
             </tbody>
         </table>
+        <a href="index.jsp" class="button">Back</a>
+
     </div>
 </body>
 </html>

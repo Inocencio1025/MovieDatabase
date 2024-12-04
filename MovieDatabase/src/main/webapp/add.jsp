@@ -22,17 +22,25 @@
             padding: 5px;
             width: 100%;
         }
+
+        form a.button, form button {
+            margin-right: 10px; /* Add space between buttons */
+            display: inline-block; /* Ensure alignment */
+            text-align: center; /* Center text */
+        }
+
         button {
             background-color: #007BFF;
             color: white;
             padding: 10px;
-            border: none;
+            text-decoration: none;
             border-radius: 5px;
-            cursor: pointer;
         }
+
         button:hover {
             background-color: #0056b3;
         }
+
     </style>
 </head>
 <body>
@@ -122,6 +130,8 @@
             %>
 
             <button type="submit" formaction="addData" name="action" value="addData">Add</button>
+            <a href="index.jsp" class="button">Back</a>
+
         </form>
     </div>
 
