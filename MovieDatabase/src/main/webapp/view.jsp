@@ -65,6 +65,8 @@
 <body>
     <h1>View Data - ${table}</h1>
 
+
+
     <div class="table-container">
         <table>
             <thead>
@@ -252,6 +254,39 @@
         </table>
         <a href="index.jsp" class="button">Back</a>
 
+    </div>
+
+    <div style="margin-top: 20px;">
+        <form action="view" method="get">
+            <label for="year">Year Released:</label>
+            <input type="text" id="year" name="year" placeholder="Enter Year (e.g., 2005)">
+
+            <label for="rating">Rating (Min):</label>
+            <input type="text" id="rating" name="rating" placeholder="Enter Rating (e.g., 4.5)">
+
+            <label for="length">Length (Min):</label>
+            <input type="text" id="length" name="length" placeholder="Enter Length in minutes">
+
+            <label for="category">Category:</label>
+            <input type="text" id="category" name="category" placeholder="Enter Category (e.g., Comedy)">
+
+            <label for="actorID">Actor ID:</label>
+            <input type="text" id="actorID" name="actorID" placeholder="Enter Actor ID">
+
+            <label for="actressID">Actress ID:</label>
+            <input type="text" id="actressID" name="actressID" placeholder="Enter Actress ID">
+
+            <label for="directorID">Director ID:</label>
+            <input type="text" id="directorID" name="directorID" placeholder="Enter Director ID">
+
+            <label for="producerID">Producer ID:</label>
+            <input type="text" id="producerID" name="producerID" placeholder="Enter Producer ID">
+
+            <label for="writerID">Writer ID:</label>
+            <input type="text" id="writerID" name="writerID" placeholder="Enter Writer ID">
+
+            <button type="submit">Apply Filters</button>
+        </form>
     </div>
 </body>
 </html>
