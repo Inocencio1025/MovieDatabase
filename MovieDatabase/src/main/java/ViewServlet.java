@@ -19,7 +19,6 @@ public class ViewServlet extends HttpServlet {
         request.setAttribute("table", table);
         request.setAttribute("data", data);
         request.getRequestDispatcher("view.jsp").forward(request, response);
-
     }
 
     @Override
@@ -34,7 +33,6 @@ public class ViewServlet extends HttpServlet {
     }
 
     private List<?> sortData(List<?> data, String tableName, String sortBy) {
-
         return switch (tableName) {
             case "MOVIE" -> {
                 List<Movie> movies = (List<Movie>) data;
@@ -112,7 +110,6 @@ public class ViewServlet extends HttpServlet {
             default -> null; // Handle invalid tableName
         };
     }
-
 
     private List<?> fetchDataFromDatabase(String tableName) {
         return switch (tableName) {

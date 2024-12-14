@@ -19,6 +19,7 @@ public class DatabaseConnection {
         try (Connection conn = getConnection(); Statement stmt = conn.createStatement()) {
 
             //Drop All tables -for testing
+            /*
             stmt.execute("DROP TABLE IF EXISTS MOVIE_ACTOR;\n" +
                     "DROP TABLE IF EXISTS MOVIE_ACTRESS;\n" +
                     "DROP TABLE IF EXISTS MOVIE_PRODUCER;\n" +
@@ -30,7 +31,7 @@ public class DatabaseConnection {
                     "DROP TABLE IF EXISTS DIRECTOR;\n" +
                     "DROP TABLE IF EXISTS WRITER;\n" +
                     "DROP TABLE IF EXISTS MOVIE;\n"
-            );
+            );*/
 
             // Create Tables
             // Movie table

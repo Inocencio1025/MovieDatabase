@@ -14,6 +14,5 @@ public class AddServlet extends HttpServlet {
         // Forward to the "add" page (e.g., a form to add new data)
         RequestDispatcher dispatcher = request.getRequestDispatcher("/add.jsp");
         dispatcher.forward(request, response);
-
     }
 }

@@ -9,49 +9,40 @@
         h1 {
            text-align: center;
         }
-
         img {
            display: block;
            margin: 0 auto;
            width: 50%;
            height: auto;
         }
-
         /* Container for the dropdowns and button */
             .center-container {
-                display: flex; /* Use flexbox to arrange items side by side */
-                justify-content: center; /* Center the items horizontally */
-                align-items: center; /* Center the items vertically */
-                gap: 10px; /* Add spacing between items */
-                margin-top: 20px; /* Add some space from the image above */
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                gap: 10px;
+                margin-top: 20px;
             }
-
-            /* Style the dropdowns and button */
             select, button {
-                font-size: 16px; /* Make the text more readable */
-                padding: 5px 10px; /* Add some padding */
-                border: 1px solid #ccc; /* Add a border */
-                border-radius: 5px; /* Rounded corners */
+                font-size: 16px;
+                padding: 5px 10px;
+                border: 1px solid #ccc; /
+                border-radius: 5px;
             }
-
             button {
-                cursor: pointer; /* Show a pointer cursor on hover */
-                background-color: #007BFF; /* Blue background */
-                color: white; /* White text */
-                border: none; /* Remove border */
+                cursor: pointer;
+                background-color: #007BFF;
+                color: white;
+                border: none;
             }
-
             button:hover {
-                background-color: #0056b3; /* Darker blue on hover */
+                background-color: #0056b3;
             }
-
-            /* Style for the team names */
             .team-names {
                 text-align: center;
                 margin-top: 20px;
                 font-size: 16px;
             }
-
             .team-names ul {
                 list-style-type: none; /* Removes bullet points */
                 padding: 0;

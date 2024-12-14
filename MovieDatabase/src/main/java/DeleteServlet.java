@@ -13,5 +13,4 @@ public class DeleteServlet extends HttpServlet {
         DatabaseConnection.deleteRecord(table,id);
         response.sendRedirect("view.jsp");
     }
-
 }

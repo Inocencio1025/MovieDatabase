@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add Data - Movie Database</title>
     <style>
-        /* Add some basic styling */
         .form-container {
             width: 50%;
             margin: auto;
@@ -23,9 +22,9 @@
             width: 100%;
         }
         form a.button, form button {
-            margin-right: 10px; /* Add space between buttons */
-            display: inline-block; /* Ensure alignment */
-            text-align: center; /* Center text */
+            margin-right: 10px;
+            display: inline-block;
+            text-align: center;
             }
         button {
             background-color: #007BFF;
@@ -72,10 +71,7 @@
             <!-- Submit button -->
             <button type="submit" formaction="addMovieData" name="action" value="addMovieData">Add to Movie</button>
             <a href="index.jsp" class="button">Back</a>
-
         </form>
     </div>
-
 </body>
-
 </html>
